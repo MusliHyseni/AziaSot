@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azia Sot</title>
+    <link rel="stylesheet" href="Trivy/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+  </head>
+
+  <body>
+
+    <div class="heading-container">
+      <h4>Azia Sot</h4>
+    </div>
+
+      <div class="options-container"></div>
+
+      <div class="container"></div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+      
+const apiKey = '25684d75579e43bf82b20529c09f015b'
+//API Used: http://newsapi.org/s/india-news-api
+const container = document.querySelector(".container");
+const optionsContainer = document.querySelector(".options-container");
+// "in" stands for India
+const country = "in";
+const options = [
+  "general",
+  "entertainment",
+  "health",
+  "science",
+  "sports",
+  "technology",
+];
+
+//100 requests per day
+let requestURL;
+
+//Create cards from data
+const generateUI = (articles) => {
+  for (let item of articles) {
+    let card = document.createElement("div");
+    card.classList.add("news-card");
+    card.innerHTML = `<div class="news-image-container">
+    <img src="${item.urlToImage || "./newspaper.jpg"}" alt="" />
+    </div>
+    <div class="news-content">
+      <div class="news-title">
+        ${item.title}
+      </div>
+      <div class="news-description">
+      ${item.description || item.content || ""}
+      </div>
+      <a href="${item.url}" target="_blank" class="view-button">Read More</a>
+    </div>`;
+    container.appendChild(card);
+  }
+};
+
+//News API Call
+const getNews = async () => {
+  container.innerHTML = "";
+  let response = await fetch(requestURL);
+  if (!response.ok) {
+    alert("Data unavailable at the moment. Please try again later");
+    return false;
+  }
+  let data = await response.json();
+  generateUI(data.articles);
+};
+
+//Category Selection
+const selectCategory = (e, category) => {
+  let options = document.querySelectorAll(".option");
+  options.forEach((element) => {
+    element.classList.remove("active");
+  });
+  requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`;
+  e.target.classList.add("active");
+  getNews();
+};
+
+//Options Buttons
+const createOptions = () => {
+  for (let i of options) {
+    optionsContainer.innerHTML += `<button class="option ${
+      i == "general" ? "active" : ""
+    }" onclick="selectCategory(event,'${i}')">${i}</button>`;
+  }
+};
+
+const init = () => {
+  optionsContainer.innerHTML = "";
+  getNews();
+  createOptions();
+};
+
+window.onload = () => {
+  requestURL = `https://newsapi.org/v2/top-headlines?country=${country}&category=general&apiKey=${apiKey}`;
+  init();
+};
+      
+    </script>
+
+</body>
+</html>

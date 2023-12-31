@@ -1,1 +1,1 @@
-# Trivy
+# <h1>Azia Sot</h1> <br> <b>Website e cila përmban lajme të Indisë.</b> <br> Lajmet, fotot, dhe të dhënat e tjera janë marrur duke përdorur NewsAPI - https://newsapi.org/ <br><br> <b>Ndërtuar më 31/12/2023</b> <br><br> ![Screenshot_1](https://github.com/MusliHyseni/Trivy/assets/144308050/c0a5859a-5214-486a-a820-b6d70decb2a6)
